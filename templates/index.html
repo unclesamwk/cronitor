@@ -19,6 +19,9 @@
     <!-- Custom styles for this template -->
     <link href="http://getbootstrap.com/examples/starter-template/starter-template.css" rel="stylesheet">
 
+    <!-- Custom styles for this template -->
+    <link href="/static/style.css" rel="stylesheet">
+
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="http://getbootstrap.com/assets/js/ie-emulation-modes-warning.js"></script>
@@ -91,7 +94,7 @@
     </nav>
 
     <div class="container">
-      <!-- <h1>Cronitor Job Dashboard</h1> -->
+      <h1>Cronitor Job Dashboard</h1>
       <table class="table">
         <thead>
             <tr>
@@ -104,10 +107,10 @@
         <tbody id="people">
         {% for job in jobs.jobs %}
         {% set ent = job.latest_entry %}
-          <tr class="job_{{job.status}}">
+          <tr>
             <td>{{ job.name }}</td>
             <td>{{ ent.timestamp }}</td>
-            <td>{{ job.status }}</td>
+            <td class="job_{{job.status}}">{{ job.status }}</td>
             <td>
               <a href="/log/{{ url_escape(job.name) }}/{{ url_escape(ent.timestamp.isoformat()) }}">newest</a>
               <a href="/log/{{ url_escape(job.name) }}">all...</a>

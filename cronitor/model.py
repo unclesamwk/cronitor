@@ -39,7 +39,7 @@ class JobSet(object):
 
     @property
     def jobs(self):
-        names = safe_listdir(self.__config.job_dir)
+        names = os.listdir(self.__config.job_dir)
         names.sort()
         for name in names:
             if os.path.isdir(self._job_dir(name)):
@@ -75,7 +75,7 @@ class Job(object):
 
     def record_log_entry(self, ts, logdata):
         if not os.path.isdir(self.__log_path):
-            os.makedirs(self.__log_path)
+            os.mkdir(self.__log_path)
 
         log_path = os.path.join(self.__log_path, ts.strftime(TS_FORMAT))
         with open(log_path, 'w') as f:
@@ -88,14 +88,9 @@ class Job(object):
     def rotate(self):
         oldest_age = datetime.now() - self.__rules.keep
 
-        entries = safe_listdir(self.__log_path)
+        entries = os.listdir(self.__log_path)
         for e in entries:
-            try:
-                ts = datetime.strptime(e, TS_FORMAT)
-            except ValueError:
-                # Ignore things we don't recognize.
-                continue
-
+            ts = datetime.strptime(e, TS_FORMAT)
             if ts < oldest_age:
                 os.unlink(os.path.join(self.__log_path, e))
 
@@ -110,27 +105,15 @@ class Job(object):
 
     @property
     def log_entries(self):
-        entries = safe_listdir(self.__log_path)
+        entries = os.listdir(self.__log_path)
         entries.sort()
         entries.reverse()
         for e in entries:
-            try:
-                yield LogEntry(self, e)
-            except ValueError:
-                # Skip things we don't recognize.
-                pass
-
-    def has_entries(self):
-        ents = self.log_entries
-        try:
-            ents.next()
-            return True
-        except StopIteration:
-            return False
+            yield LogEntry(self, e)
 
     @property
     def latest_entry(self):
-        entries = safe_listdir(self.__log_path)
+        entries = os.listdir(self.__log_path)
         entries.sort()
         return LogEntry(self, entries[-1])
 
@@ -169,15 +152,7 @@ class LogEntry(object):
             line = f.readline().strip()
             while line:
                 m = re.match('([a-zA-Z0-9_.-]*):\s*(.*)', line)
-                if not m:
-                    # This shouldn't happen unless the log file is
-                    # poorly-formatted for some reason.  If this happens, just
-                    # assume the rest of the file is the log itself -- this is
-                    # probably the least-bad failure case since it gives the
-                    # user the contents of the file and lets them see what might
-                    # have happened.
-                    break
-
+                assert m
                 header[m.group(1)] = m.group(2)
                 line = f.readline().strip()
 
@@ -195,7 +170,7 @@ class LogEntry(object):
         # Make sure nothing weird or nasty appears in the log
         for line, is_err in self.scan_text():
             if is_err:
-                return 'ok - with error'
+                return 'error'
 
         return 'ok'
 
@@ -207,17 +182,23 @@ class LogEntry(object):
     @property
     def command(self):
         self._read()
-        return self.__header.get('Command', '')
+        try:
+            return self.__header['Command']
+        except KeyError: return ''
 
     @property
     def rc(self):
         self._read()
-        return int(self.__header.get('Return-Code', -1))
+        try:
+            return int(self.__header['Return-Code'])
+        except KeyError: return -1
 
     @property
     def pwd(self):
         self._read()
-        return self.__header.get('Directory', '')
+        try:
+            return self.__header['Directory']
+        except KeyError: return ''
 
     @property
     def env(self):
@@ -239,11 +220,3 @@ class LogEntry(object):
         for line in self.__lines:
             is_err = rules.is_error_line(line)
             yield line, is_err
-
-
-
-def safe_listdir(path):
-    if os.path.isdir(path):
-        return os.listdir(path)
-    else:
-        return []
