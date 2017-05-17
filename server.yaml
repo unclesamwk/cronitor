@@ -22,7 +22,7 @@ rules_file: rules.yaml
 
 # If you want to change the interfaces/ports that cronitor-server listens on,
 # uncomment this:
-#listen_on:
+# listen_on: 
 #  - "*:8434"
 #  - "localhost:8434"
 #  - ...

@@ -195,7 +195,7 @@ class LogEntry(object):
         # Make sure nothing weird or nasty appears in the log
         for line, is_err in self.scan_text():
             if is_err:
-                return 'error'
+                return 'ok - with error'
 
         return 'ok'
 

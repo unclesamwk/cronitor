@@ -55,9 +55,8 @@
   keep: 1yr
 
 - match: "*"
-  due_every: 1h
+  due_every: 1d
   errors_i:
-    - "error"
     - "failed"
     - "timed out"
     - "timeout"
