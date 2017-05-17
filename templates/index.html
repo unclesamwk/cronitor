@@ -112,8 +112,8 @@
             <td>{{ ent.timestamp }}</td>
             <td class="job_{{job.status}}">{{ job.status }}</td>
             <td>
-              <a href="/log/{{ url_escape(job.name) }}/{{ url_escape(ent.timestamp.isoformat()) }}">newest</a>
-              <a href="/log/{{ url_escape(job.name) }}">all...</a>
+              <!-- <a href="/log/{{ url_escape(job.name) }}/{{ url_escape(ent.timestamp.isoformat()) }}">newest</a> -->
+              <a href="/log/{{ url_escape(job.name) }}">LOGFILES</a>
           </td>
         {% end %}
         </tbody>
