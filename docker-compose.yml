@@ -1,0 +1,8 @@
+cronitor:
+  build: .
+  container_name: cronitor
+  ports: 
+    - 8434:8434
+  volumes:
+    - .:/opt/cronitor
+  tty: true   
