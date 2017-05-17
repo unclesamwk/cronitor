@@ -36,7 +36,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Cronitor Job Dashboard</a>
+          <a class="navbar-brand" href="/">Cronitor Job Dashboard</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
@@ -65,16 +65,16 @@
         </tr>
       </table>
 
-      <table class="table">
-        {% set sorted_env = entry.env.items() %}
+      <!-- <table class="table">
+        {% set sorted_env = entry.env.items() %} -->
         <!-- {{ sorted_env.sort() }} -->
-        {% for k, v in sorted_env %}
+        <!-- {% for k, v in sorted_env %}
         <tr>
           <th>{{ k }}</th>
           <td>{{ v }}</td>
         </tr>
         {% end %}
-      </table>
+      </table> -->
 
     <div class="log_text">
       {% for line, is_err in entry.scan_text() %}{% if is_err %}
