@@ -1,2 +1,2 @@
 *.pyc
-cronitor-log
+logs/*
