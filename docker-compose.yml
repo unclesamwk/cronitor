@@ -5,5 +5,3 @@ cronitor:
     - 8434:8434
   volumes:
     - .:/opt/cronitor
-    - ./cronitor-log:/var/log/cronitor
-  tty: true   
