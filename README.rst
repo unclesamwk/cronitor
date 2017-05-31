@@ -127,6 +127,13 @@ Then setup your crontab to look like this::
 
 See ``cronitor-run --help`` for more details about how to invoke it.
 
+
+Use cronitor with Docker
+=======================
+
+Start container with ``docker-compose up -d``
+
+
 A Note About Security
 =====================
 
