@@ -9,8 +9,6 @@
     <meta name="author" content="">
     <link rel="icon" href="favicon.ico">
 
-    <title>Cronitor</title>
-
     <!-- Bootstrap core CSS -->
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -23,6 +21,10 @@
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="http://getbootstrap.com/assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- Custom styles for this template -->
+    <link href="/static/style.css" rel="stylesheet">
+
   </head>
   <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -62,9 +64,9 @@
         </tr>
         {% end %}
         {% for entry in job.log_entries %}
-        <tr class="job_{{entry.status}}">
+        <tr>
           <td>{{ entry.timestamp }}</td>
-          <td>{{ entry.status }}</td>
+          <td class="job_{{job.status}}">{{ entry.status }}</td>
           <td><a href="{{ url_escape(entry.timestamp.isoformat()) }}">LOGFILE</a></td>
         </tr>
         {% end %}
