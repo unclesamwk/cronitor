@@ -3,7 +3,6 @@
 #
 # Any relative path will be interpreted relative to this config file.
 
-
 # The directory used to hold log files from jobs.  Must be writable by the
 # server.
 job_dir: logs
