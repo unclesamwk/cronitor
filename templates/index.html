@@ -25,6 +25,9 @@
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="http://getbootstrap.com/assets/js/ie-emulation-modes-warning.js"></script>
 
+    <!-- Add Jet.js Libary for search -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jets/0.14.0/jets.js"></script>
+
     <script type="text/javascript">
         var people, asc1 = 1,
             asc2 = 1,
@@ -88,7 +91,7 @@
     </nav>
     <div class="container">
       <h1>Cronitor Job Dashboard</h1>
-      <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Servers ..." title="Type in a name">
+      <input type="search" id="myInput" placeholder="Search for anything ..." title="Type in a name">
       <table class="table" id="myTable">
         <thead>
             <tr class=header>
@@ -123,23 +126,10 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <!-- <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
     <script>
-      function myFunction() {
-        var input, filter, table, tr, td, i;
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("myTable");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-          td = tr[i].getElementsByTagName("td")[0];
-          if (td) {
-            if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-              tr[i].style.display = "";
-            } else {
-              tr[i].style.display = "none";
-            }
-          }
-        }
-      }
-      </script>
+        var search = new Jets({
+            searchTag: '#myInput',
+            contentTag: '#people'
+        });
+    </script>
   </body>
 </html>
